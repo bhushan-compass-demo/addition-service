@@ -1,5 +1,7 @@
+version: 2.1
+
 jobs:
-  test:
+  build-and-test:
     docker:
       - image: moveworkforward/atlassian-sdk
     steps:
@@ -7,3 +9,8 @@ jobs:
       - run:
           name: Run unit tests
           command: atlas-unit-test
+workflows:
+  run-unit-tests:
+    jobs:
+      - build-and-test
+
