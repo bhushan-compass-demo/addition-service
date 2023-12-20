@@ -36,8 +36,10 @@ workflows:
           requires:
             - build-and-test
           post-steps:
-            - compass/notify_deployment:   
-                environment_type: staging                    
+            - compass/notify_deployment:  
+                environment: staging 
+                environment_type: staging   
+                token_name: "Compass notifications"                 
       - deploy-to-production:
           context:
             - compass-integration-crossprod.atlassian.net      
@@ -45,6 +47,8 @@ workflows:
             - deploy-to-staging        
           post-steps:
             - compass/notify_deployment:
+                environment: production
                 environment_type: production
+                token_name: "Compass notifications"
       
 
