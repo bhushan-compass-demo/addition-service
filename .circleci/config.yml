@@ -16,11 +16,21 @@ jobs:
       - run:
           name: Deploy to staging
           command: echo "Deploying artifact to staging environment"  
+  deploy-to-production:    
+    docker:
+      - image: moveworkforward/atlassian-sdk
+    steps:
+      - run:
+          name: Deploy to production
+          command: echo "Deploying artifact to production environment"           
 workflows:
-  run-unit-tests:
+  build-test-and-deploy:
     jobs:
       - build-and-test
       - deploy-to-staging:
           requires:
             - build-and-test
+      - deploy-to-production:
+          requires:
+            - deploy-to-staging
 
