@@ -1,5 +1,5 @@
 jobs:
-  build-and-test:
+  test:
     docker:
       - image: moveworkforward/atlassian-sdk
     steps:
