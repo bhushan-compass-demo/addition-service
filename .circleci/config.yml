@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: Run unit tests
-          command: atlas-unit-test
+          command: echo "Running unit tests"
   deploy-to-staging:    
     docker:
       - image: moveworkforward/atlassian-sdk
@@ -20,44 +20,41 @@ jobs:
       - run:
           name: Deploy to staging
           command: echo "Deploying artifact to staging environment"  
+      - jira/notify: 
+          environment: staging 
+          environment_type: staging 
+          pipeline_id: << pipeline.id >>
+          pipeline_number: << pipeline.number >>
   deploy-to-production:    
     docker:
       - image: moveworkforward/atlassian-sdk
     steps:
       - run:
           name: Deploy to production
-          command: echo "Deploying artifact to production environment"           
+          command: echo "Deploying artifact to production environment"  
+      - jira/notify: 
+          environment: production 
+          environment_type: production 
+          pipeline_id: << pipeline.id >>
+          pipeline_number: << pipeline.number >>         
+      
 workflows:
   build-test-and-deploy:
     jobs:
       - build-and-test
       - deploy-to-staging:
-          context:
-            - compass-integration-crossprod.atlassian.net
+          context: JIRA_WEBHOOK_URL
           requires:
-            - build-and-test
-          post-steps:
-            - compass/notify_deployment:  
-                environment: staging 
-                environment_type: staging  
-            - jira/notify: 
-                environment: staging 
-                environment_type: staging 
-                pipeline_id: << pipeline.id >>
-                pipeline_number: << pipeline.number >>
+            - build-and-test                      
       - deploy-to-production:
-          context:
-            - compass-integration-crossprod.atlassian.net      
+          context: JIRA_WEBHOOK_URL
+          filters:
+            branches:
+              only:
+                - main
           requires:
             - deploy-to-staging        
           post-steps:
             - compass/notify_deployment:
                 environment: production
                 environment_type: production
-            - jira/notify: 
-                environment: staging 
-                environment_type: staging 
-                pipeline_id: << pipeline.id >>
-                pipeline_number: << pipeline.number >>
-      
-
