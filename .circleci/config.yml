@@ -32,7 +32,7 @@ workflows:
       - build-and-test
       - deploy-to-staging:
           context:
-            - compass-integration-crossprod
+            - compass-integration-crossprod.atlassian.net
           requires:
             - build-and-test
           post-steps:
@@ -40,7 +40,7 @@ workflows:
                 environment_type: staging            
       - deploy-to-production:
           context:
-            - compass-integration-crossprod      
+            - compass-integration-crossprod.atlassian.net      
           requires:
             - deploy-to-staging        
           post-steps:
