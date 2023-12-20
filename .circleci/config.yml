@@ -43,8 +43,7 @@ workflows:
     jobs:
       - build-and-test
       - deploy-to-staging:
-          context:
-            - JIRA_WEBHOOK_URL
+          context: JIRA_WEBHOOK_URL
           requires:
             - build-and-test
           post-steps:
@@ -52,14 +51,12 @@ workflows:
                 environment: staging 
                 environment_type: staging              
       - deploy-to-production:
-          context: 
-            - JIRA_WEBHOOK_URL
+          context: JIRA_WEBHOOK_URL
           filters:
             branches:
               only:
                 - master
-          context: 
-            - JIRA_WEBHOOK_URL
+          context: JIRA_WEBHOOK_URL
           requires:
             - deploy-to-staging        
           post-steps:
