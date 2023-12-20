@@ -9,7 +9,7 @@ jobs:
       - run:
           name: Run unit tests
           command: atlas-unit-test
-  deploy:    
+  deploy-to-staging:    
     steps:
       - run:
           name: Deploy to staging
@@ -18,7 +18,7 @@ workflows:
   run-unit-tests:
     jobs:
       - build-and-test
-  deploy-to-staging:
-    jobs:
-      - deploy
+      - deploy-to-staging:
+        requires:
+          - build-and-test
 
