@@ -43,6 +43,8 @@ workflows:
             - jira/notify: 
                 environment: staging 
                 environment_type: staging 
+                pipeline_id: << pipeline.id >>
+                pipeline_number: << pipeline.number >>
       - deploy-to-production:
           context:
             - compass-integration-crossprod.atlassian.net      
@@ -55,5 +57,7 @@ workflows:
             - jira/notify: 
                 environment: staging 
                 environment_type: staging 
+                pipeline_id: << pipeline.id >>
+                pipeline_number: << pipeline.number >>
       
 
