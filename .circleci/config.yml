@@ -51,7 +51,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
           requires:
             - deploy-to-staging        
           post-steps:
