@@ -1,0 +1,17 @@
+name: addition-service
+id: ari:cloud:compass:7bb1ae91-95ab-4358-ad9f-60f3c19b7fa3:component/b6db1e0c-6e86-4e98-9a82-6d52cb14646d/94618cc8-2c6c-4a86-9a98-b787b4d7b499
+description: null
+configVersion: 1
+typeId: SERVICE
+fields:
+  tier: 4
+links:
+  - name: null
+    type: REPOSITORY
+    url: https://github.com/bhushan-compass-demo/addition-service
+relationships:
+  DEPENDS_ON: []
+labels:
+  - language:java
+  - source:github
+customFields: null
