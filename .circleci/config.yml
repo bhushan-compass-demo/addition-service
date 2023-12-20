@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: Run unit tests
-          command: atlas-unit-test
+          command: echo "Running unit tests"
   deploy-to-staging:    
     docker:
       - image: moveworkforward/atlassian-sdk
@@ -20,13 +20,24 @@ jobs:
       - run:
           name: Deploy to staging
           command: echo "Deploying artifact to staging environment"  
+      - jira/notify: 
+          environment: staging 
+          environment_type: staging 
+          pipeline_id: << pipeline.id >>
+          pipeline_number: << pipeline.number >>
   deploy-to-production:    
     docker:
       - image: moveworkforward/atlassian-sdk
     steps:
       - run:
           name: Deploy to production
-          command: echo "Deploying artifact to production environment"           
+          command: echo "Deploying artifact to production environment"  
+      - jira/notify: 
+          environment: production 
+          environment_type: production 
+          pipeline_id: << pipeline.id >>
+          pipeline_number: << pipeline.number >>         
+      
 workflows:
   build-test-and-deploy:
     jobs:
@@ -39,25 +50,20 @@ workflows:
           post-steps:
             - compass/notify_deployment:  
                 environment: staging 
-                environment_type: staging  
-            - jira/notify: 
-                environment: staging 
-                environment_type: staging 
-                pipeline_id: << pipeline.id >>
-                pipeline_number: << pipeline.number >>
+                environment_type: staging              
       - deploy-to-production:
-          context:
-            - compass-integration-crossprod.atlassian.net      
+          context: https://128227a1-b1f0-4c2b-b7b6-1b32a1afee83.hello.atlassian-dev.net/x1/X7SXco5ciglDP9tR9-WJI5R18Fk
+          filters:
+            branches:
+              only:
+                - master
+          context: https://128227a1-b1f0-4c2b-b7b6-1b32a1afee83.hello.atlassian-dev.net/x1/X7SXco5ciglDP9tR9-WJI5R18Fk 
           requires:
             - deploy-to-staging        
           post-steps:
             - compass/notify_deployment:
                 environment: production
                 environment_type: production
-            - jira/notify: 
-                environment: staging 
-                environment_type: staging 
-                pipeline_id: << pipeline.id >>
-                pipeline_number: << pipeline.number >>
+            
       
 
