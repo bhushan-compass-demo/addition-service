@@ -32,4 +32,10 @@ public class AdditionServiceUnitTests
         Integer sum = 10;
         assertEquals(10, sum.intValue());
     }
+
+    public void testAdditionService5()
+    {
+        Integer sum = 10;
+        assertEquals(10, sum.intValue());
+    }
 }
