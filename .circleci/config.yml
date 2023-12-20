@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  compass: atlassian-labs/compass@x.y.z
+
 jobs:
   build-and-test:
     docker:
@@ -28,9 +31,20 @@ workflows:
     jobs:
       - build-and-test
       - deploy-to-staging:
+          context:
+            - compass-integration-crossprod
           requires:
             - build-and-test
+          post-steps:
+            - compass/notify_deployment:
+                environment_type: staging            
       - deploy-to-production:
+          context:
+            - compass-integration-crossprod      
           requires:
-            - deploy-to-staging
+            - deploy-to-staging        
+          post-steps:
+            - compass/notify_deployment:
+                environment_type: production
+      
 
