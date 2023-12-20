@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   compass: atlassian-labs/compass@0.1.3
+  jira: circleci/jira@2.1.0
 
 jobs:
   build-and-test:
@@ -38,7 +39,10 @@ workflows:
           post-steps:
             - compass/notify_deployment:  
                 environment: staging 
-                environment_type: staging   
+                environment_type: staging  
+            - jira/notify: 
+                environment: staging 
+                environment_type: staging 
       - deploy-to-production:
           context:
             - compass-integration-crossprod.atlassian.net      
@@ -48,5 +52,8 @@ workflows:
             - compass/notify_deployment:
                 environment: production
                 environment_type: production
+            - jira/notify: 
+                environment: staging 
+                environment_type: staging 
       
 
