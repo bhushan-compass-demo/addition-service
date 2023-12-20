@@ -9,24 +9,16 @@ jobs:
       - run:
           name: Run unit tests
           command: atlas-unit-test
-  deploy-staging:
+  deploy:    
     steps:
       - run:
           name: Deploy to staging
-          command: echo "Deploying artifact to staging environment"
-  deploy-production:
-    steps:
-      - run:
-          name: Deploy to production
-          command: echo "Deploying artifact to production environment"          
+          command: echo "Deploying artifact to staging environment"  
 workflows:
   run-unit-tests:
     jobs:
       - build-and-test
   deploy-to-staging:
     jobs:
-      - deploy-staging
-  deploy-to-production:
-    jobs:
-      - deploy-production
+      - deploy
 
