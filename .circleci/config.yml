@@ -39,7 +39,6 @@ workflows:
             - compass/notify_deployment:  
                 environment: staging 
                 environment_type: staging   
-                token_name: "Compass notifications"                 
       - deploy-to-production:
           context:
             - compass-integration-crossprod.atlassian.net      
@@ -49,6 +48,5 @@ workflows:
             - compass/notify_deployment:
                 environment: production
                 environment_type: production
-                token_name: "Compass notifications"
       
 
