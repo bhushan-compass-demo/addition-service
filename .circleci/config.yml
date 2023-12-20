@@ -44,7 +44,7 @@ workflows:
       - build-and-test
       - deploy-to-staging:
           context:
-            - compass-integration-crossprod.atlassian.net
+            - https://128227a1-b1f0-4c2b-b7b6-1b32a1afee83.hello.atlassian-dev.net/x1/X7SXco5ciglDP9tR9-WJI5R18Fk
           requires:
             - build-and-test
           post-steps:
@@ -52,12 +52,14 @@ workflows:
                 environment: staging 
                 environment_type: staging              
       - deploy-to-production:
-          context: https://128227a1-b1f0-4c2b-b7b6-1b32a1afee83.hello.atlassian-dev.net/x1/X7SXco5ciglDP9tR9-WJI5R18Fk
+          context: 
+            - https://128227a1-b1f0-4c2b-b7b6-1b32a1afee83.hello.atlassian-dev.net/x1/X7SXco5ciglDP9tR9-WJI5R18Fk
           filters:
             branches:
               only:
                 - master
-          context: https://128227a1-b1f0-4c2b-b7b6-1b32a1afee83.hello.atlassian-dev.net/x1/X7SXco5ciglDP9tR9-WJI5R18Fk 
+          context: 
+            - https://128227a1-b1f0-4c2b-b7b6-1b32a1afee83.hello.atlassian-dev.net/x1/X7SXco5ciglDP9tR9-WJI5R18Fk 
           requires:
             - deploy-to-staging        
           post-steps:
